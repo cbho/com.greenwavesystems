@@ -317,7 +317,8 @@
             ],
             "icon": "/drivers/powernode-6/assets/icon-1.svg",
             "name": {
-              "en": "Greenwave PowerNode Socket 1"
+              "en": "Greenwave PowerNode Socket 1",
+              "nl": "Greenwave PowerNode Stopcontact 1"
             }
           },
           "2": {
@@ -329,7 +330,8 @@
             ],
             "icon": "/drivers/powernode-6/assets/icon-2.svg",
             "name": {
-              "en": "Greenwave PowerNode Socket 2"
+              "en": "Greenwave PowerNode Socket 2",
+              "nl": "Greenwave PowerNode Stopcontact 2"
             }
           },
           "3": {
@@ -341,7 +343,8 @@
             ],
             "icon": "/drivers/powernode-6/assets/icon-3.svg",
             "name": {
-              "en": "Greenwave PowerNode Socket 3"
+              "en": "Greenwave PowerNode Socket 3",
+              "nl": "Greenwave PowerNode Stopcontact 3"
             }
           },
           "4": {
@@ -353,7 +356,8 @@
             ],
             "icon": "/drivers/powernode-6/assets/icon-4.svg",
             "name": {
-              "en": "Greenwave PowerNode Socket 4"
+              "en": "Greenwave PowerNode Socket 4",
+              "nl": "Greenwave PowerNode Stopcontact 4"
             }
           },
           "5": {
@@ -365,7 +369,8 @@
             ],
             "icon": "/drivers/powernode-6/assets/icon-5.svg",
             "name": {
-              "en": "Greenwave PowerNode Socket 5"
+              "en": "Greenwave PowerNode Socket 5",
+              "nl": "Greenwave PowerNode Stopcontact 5"
             }
           },
           "6": {
@@ -377,7 +382,8 @@
             ],
             "icon": "/drivers/powernode-6/assets/icon-6.svg",
             "name": {
-              "en": "Greenwave PowerNode Socket 6"
+              "en": "Greenwave PowerNode Socket 6",
+              "nl": "Greenwave PowerNode Stopcontact 6"
             }
           }
         }
@@ -417,57 +423,372 @@
             "nl": "Aantal minuten zonder contact tussen controller en apparaat voordat het apparaat groen gaat knipperen, standaard: 255 [min]."
           }
         },
-        {
-          "id": "poll_interval_onoff",
-          "type": "number",
-          "attr": {
-            "min": 0,
-            "max": 7200
-          },
-          "value": 300,
-          "label": {
-            "en": "Poll interval on/off",
-            "nl": "Poll interval on/off"
-          },
-          "hint": {
-            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-          }
-        },
-        {
-          "id": "poll_interval_measure",
-          "type": "number",
-          "attr": {
-            "min": 0,
-            "max": 7200
-          },
-          "value": 600,
-          "label": {
-            "en": "Poll interval measure (W)",
-            "nl": "Poll interval measure (W)"
-          },
-          "hint": {
-            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-          }
-        },
-        {
-          "id": "poll_interval_meter",
-          "type": "number",
-          "attr": {
-            "min": 0,
-            "max": 7200
-          },
-          "value": 3600,
-          "label": {
-            "en": "Poll interval meter (kWh)",
-            "nl": "Poll interval meter (kWh)"
-          },
-          "hint": {
-            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-          }
-        }
+    		{
+    			"type": "group",
+    			"label": {
+    				"en": "Poll State socket 1",
+    				"nl": "Poll Status stopcontact 1"
+    			},
+    			"collapsed": true,
+    			"children": [
+    				{
+    					"id": "poll_onoff_1",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 300,
+    					"label": {
+    						"en": "On/off",
+    						"nl": "Aan/uit"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_measure_1",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 600,
+    					"label": {
+    						"en": "Wattage",
+    						"nl": "Wattage"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_meter_1",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 3600,
+    					"label": {
+    						"en": "KiloWattHour (kWh)",
+    						"nl": "KiloWattUur (kWh)"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+    					}
+    				}
+    			]
+    		},
+    		{
+    			"type": "group",
+    			"label": {
+    				"en": "Poll state socket 2",
+    				"nl": "Poll status stopcontact 2"
+    			},
+    			"collapsed": true,
+    			"children": [
+    				{
+    					"id": "poll_onoff_2",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 300,
+    					"label": {
+    						"en": "On/off",
+    						"nl": "Aan/uit"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_measure_2",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 600,
+    					"label": {
+    						"en": "Wattage",
+    						"nl": "Wattage"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_meter_2",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 3600,
+    					"label": {
+    						"en": "KiloWattHour (kWh)",
+    						"nl": "KiloWattUur (kWh)"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+    					}
+    				}
+    			]
+    		},
+    		{
+    			"type": "group",
+    			"label": {
+    				"en": "Poll state socket 3",
+    				"nl": "Poll status stopcontact 3"
+    			},
+    			"collapsed": true,
+    			"children": [
+    				{
+    					"id": "poll_onoff_3",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 300,
+    					"label": {
+    						"en": "On/off",
+    						"nl": "Aan/uit"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_measure_3",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 600,
+    					"label": {
+    						"en": "Wattage",
+    						"nl": "Wattage"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_meter_3",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 3600,
+    					"label": {
+    						"en": "KiloWattHour (kWh)",
+    						"nl": "KiloWattUur (kWh)"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+    					}
+    				}
+    			]
+    		},
+    		{
+    			"type": "group",
+    			"label": {
+    				"en": "Poll state socket 4",
+    				"nl": "Poll status stopcontact 4"
+    			},
+    			"collapsed": true,
+    			"children": [
+    				{
+    					"id": "poll_onoff_4",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 30,
+    					"label": {
+    						"en": "On/off",
+    						"nl": "Aan/uit"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_measure_4",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 600,
+    					"label": {
+    						"en": "Wattage",
+    						"nl": "Wattage"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_meter_4",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 3600,
+    					"label": {
+    						"en": "KiloWattHour (kWh)",
+    						"nl": "KiloWattUur (kWh)"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+    					}
+    				}
+    			]
+    		},
+    		{
+    			"type": "group",
+    			"label": {
+    				"en": "Poll state socket 5",
+    				"nl": "Poll status stopcontact 5"
+    			},
+    			"collapsed": true,
+    			"children": [
+    				{
+    					"id": "poll_onoff_5",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 300,
+    					"label": {
+    						"en": "On/off",
+    						"nl": "Aan/uit"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_measure_5",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 600,
+    					"label": {
+    						"en": "Wattage",
+    						"nl": "Wattage"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_meter_5",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 3600,
+    					"label": {
+    						"en": "KiloWattHour (kWh)",
+    						"nl": "KiloWattUur (kWh)"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+    					}
+    				}
+    			]
+    		},
+    		{
+    			"type": "group",
+    			"label": {
+    				"en": "Poll state socket 6",
+    				"nl": "Poll status stopcontact 6"
+    			},
+    			"collapsed": true,
+    			"children": [
+    				{
+    					"id": "poll_onoff_6",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 300,
+    					"label": {
+    						"en": "On/off",
+    						"nl": "Aan/uit"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_measure_6",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 600,
+    					"label": {
+    						"en": "Wattage",
+    						"nl": "Wattage"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+    					}
+    				},
+    				{
+    					"id": "poll_meter_6",
+    					"type": "number",
+    					"attr": {
+    						"min": 0,
+    						"max": 7200
+    					},
+    					"value": 3600,
+    					"label": {
+    						"en": "KiloWattHour (kWh)",
+    						"nl": "KiloWattUur (kWh)"
+    					},
+    					"hint": {
+    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+    					}
+    				}
+    			]
+    		}
       ]
     }
   ]
