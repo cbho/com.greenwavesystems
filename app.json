@@ -1,795 +1,864 @@
 {
-  "id": "com.greenwavesystems",
-  "name": {
-    "en": "Greenwave Systems",
-    "nl": "Greenwave Systems"
-  },
-  "version": "1.1.1",
-  "compatibility": ">=1.0.5",
-  "author": {
-    "name": "Athom B.V.",
-    "email": "info@athom.com"
-  },
-  "contributors": {
-    "developers": [
-      {
-        "name": "Rex Markesteijn",
-        "email": "rmarkesteijn79@gmail.com"
-      },
-      {
-        "name": "Jelger Haanstra",
-        "email": "homey@solidewebservices.com"
-      },
-      {
-        "name": "Ted Tolboom",
-        "email": "dTNL.Homey@gmail.com"
-      }
-    ]
-  },
-  "flow": {
-    "actions": [
-      {
-        "id": "PN1_reset_meter",
-        "title": {
-          "en": "Reset meter values",
-          "nl": "Meter waarden resetten"
-        },
-        "hint": {
-          "en": "Reset the accumulated power usage (kWh). Can not be reversed.",
-          "nl": "Reset de stroomverbruik (kWh) waarden. Kan niet ongedaan worden gemaakt."
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=powernode-1"
-          }
-        ]
-      },
-      {
-        "id": "PN6_reset_meter",
-        "title": {
-          "en": "Reset meter values",
-          "nl": "Meter waarden resetten"
-        },
-        "hint": {
-          "en": "Reset the accumulated power usage (kWh). Can not be reversed.",
-          "nl": "Reset de stroomverbruik (kWh) waarden. Kan niet ongedaan worden gemaakt."
-        },
-        "args": [
-          {
-            "name": "device",
-            "type": "device",
-            "filter": "driver_id=powernode-6"
-          }
-        ]
-      }
-    ]
-  },
-  "category": [
-    "appliances"
-  ],
-  "description": {
-    "en": "Drivers for Greenwave Systems devices",
-    "nl": "Drivers voor Greenwave Systems apparaten"
-  },
-  "images": {
-    "large": "/assets/images/large.jpg",
-    "small": "/assets/images/small.jpg"
-  },
-  "drivers": [
-    {
-      "id": "powernode-1",
-      "name": {
-        "en": "Greenwave PowerNode 1",
-        "nl": "Greenwave PowerNode 1"
-      },
-      "icon": "/drivers/powernode-1/assets/icon.svg",
-      "images": {
-        "large": "/drivers/powernode-1/assets/images/large.jpg",
-        "small": "/drivers/powernode-1/assets/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power"
-      ],
-      "zwave": {
-        "manufacturerId": 153,
-        "productTypeId": 2,
-        "productId": 2,
-        "learnmode": {
-          "image": "/drivers/powernode-1/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press the small button on your Greenwave PowerNode",
-            "nl": "Druk op de kleine knop op de Greenwave PowerNode"
-          }
-        },
-        "associationGroups": [
-          1,
-          3
-        ],
-        "associationGroupsOptions": {
-          "1": {
-            "hint": {
-              "en": "Reports the device status and allows control (ON/OFF) over the powernode (Homey ID by default). It is not recommended to change this group.",
-              "nl": "Rapportage van de status van de powernode en staat controle (AAN/UIT) over de powernode toe (Homey ID als standaard waarde). Het is niet aanbevolen om deze groep aan te passen."
-            }
-          },
-          "2": {
-            "hint": {
-              "en": "Reports alarm report when detecting current leakage of defined relay device if an association relationship has been defined (add Z-wave ID of relay device).",
-              "nl": "Rapportage van een alarm op het moment dat een lekstroom gedetecteerd wordt op een gekoppelds apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
-            }
-          },
-          "3": {
-            "hint": {
-              "en": "Reports the power value change if the difference of the instant power reading compared to previous report is larger than the -Power change for update- parameter set (e.g. 80%). (Homey ID by default)",
-              "nl": "Rapportage van de gebruikte energie wanneer het verschil met de vorige rapportage groter is dan de waarde ingesteld bij -Wijziging in energie voor update- parameter (bv. 80%). (Homey ID als standaard waarde)"
-            }
-          },
-          "4": {
-            "hint": {
-              "en": "Reports alarm when the powernode is in over-current protection and powers off a relay device if an association relationship has been defined (add Z-wave ID of relay device).",
-              "nl": "Alarm reportage wanneer de powernode in over-current protectie overschakeld en automatische uitschakeling van het gekoppelde apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
-            }
-          }
-        },
-        "defaultConfiguration": [
-          {
-            "id": 0,
-            "size": 1,
-            "value": 80
-          },
-          {
-            "id": 1,
-            "size": 1,
-            "value": "0xFF"
-          }
-        ]
-      },
-      "settings": [
-        {
-          "id": 0,
-          "type": "number",
-          "attr": {
-            "min": 1,
-            "max": 100
-          },
-          "value": 80,
-          "label": {
-            "en": "Power change for update",
-            "nl": "Wijziging in energie voor update"
-          },
-          "hint": {
-            "en": "Power change required to send an update to controller, in % from 1 to 100, default: 80 [%].",
-            "nl": "Wijziging in energie voordat er een update naar de controller wordt gestuurd, in % van 1 tot 100, standaard: 80 [%].."
-          }
-        },
-        {
-          "id": 1,
-          "type": "number",
-          "attr": {
-            "min": 1,
-            "max": 255
-          },
-          "value": 255,
-          "label": {
-            "en": "Keep alive time",
-            "nl": "Keep alive time"
-          },
-          "hint": {
-            "en": "The amount of minutes without contact between controller and device before the device starts blinking green, default: 255 [min].",
-            "nl": "Aantal minuten zonder contact tussen controller en apparaat voordat het apparaat groen gaat knipperen, standaard: 255 [min]."
-          }
-        },
-        {
-          "id": "poll_interval_onoff",
-          "type": "number",
-          "attr": {
-            "min": 0,
-            "max": 7200
-          },
-          "value": 300,
-          "label": {
-            "en": "Poll interval on/off",
-            "nl": "Poll interval on/off"
-          },
-          "hint": {
-            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-          }
-        },
-        {
-          "id": "poll_interval_measure",
-          "type": "number",
-          "attr": {
-            "min": 0,
-            "max": 7200
-          },
-          "value": 600,
-          "label": {
-            "en": "Poll interval measure (W)",
-            "nl": "Poll interval measure (W)"
-          },
-          "hint": {
-            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-          }
-        },
-        {
-          "id": "poll_interval_meter",
-          "type": "number",
-          "attr": {
-            "min": 0,
-            "max": 7200
-          },
-          "value": 3600,
-          "label": {
-            "en": "Poll interval meter (kWh)",
-            "nl": "Poll interval meter (kWh)"
-          },
-          "hint": {
-            "en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-            "nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-          }
-        }
-      ]
-    },
-    {
-      "id": "powernode-6",
-      "name": {
-        "en": "Greenwave PowerNode 6",
-        "nl": "Greenwave PowerNode 6"
-      },
-      "icon": "/drivers/powernode-6/assets/icon.svg",
-      "images": {
-        "large": "/drivers/powernode-6/assets/images/large.jpg",
-        "small": "/drivers/powernode-6/assets/images/small.jpg"
-      },
-      "class": "socket",
-      "capabilities": [
-        "onoff",
-        "measure_power",
-        "meter_power"
-      ],
-      "zwave": {
-        "manufacturerId": 153,
-        "productTypeId": 3,
-        "productId": 4,
-        "learnmode": {
-          "image": "/drivers/powernode-6/assets/learnmode.svg",
-          "instruction": {
-            "en": "Press the small button on your Greenwave PowerNode",
-            "nl": "Druk op de kleine knop op de Greenwave PowerNode"
-          }
-        },
-        "associationGroups": [
-          1,
-          3
-        ],
-        "associationGroupsOptions": {
-          "1": {
-            "hint": {
-              "en": "Reports the device status and allows control (ON/OFF) over the powernode (Homey ID by default). It is not recommended to change this group.",
-              "nl": "Rapportage van de status van de powernode en staat controle (AAN/UIT) over de powernode toe (Homey ID als standaard waarde). Het is niet aanbevolen om deze groep aan te passen."
-            }
-          },
-          "2": {
-            "hint": {
-              "en": "Reports alarm report when detecting current leakage of defined relay device if an association relationship has been defined (add Z-wave ID of relay device).",
-              "nl": "Rapportage van een alarm op het moment dat een lekstroom gedetecteerd wordt op een gekoppelds apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
-            }
-          },
-          "3": {
-            "hint": {
-              "en": "Reports the power value change if the difference of the instant power reading compared to previous report is larger than the -Power change for update- parameter set (e.g. 80%). (Homey ID by default)",
-              "nl": "Rapportage van de gebruikte energie wanneer het verschil met de vorige rapportage groter is dan de waarde ingesteld bij -Wijziging in energie voor update- parameter (bv. 80%). (Homey ID als standaard waarde)"
-            }
-          },
-          "4": {
-            "hint": {
-              "en": "Reports alarm when the powernode is in over-current protection and powers off a relay device if an association relationship has been defined (add Z-wave ID of relay device).",
-              "nl": "Alarm reportage wanneer de powernode in over-current protectie overschakeld en automatische uitschakeling van het gekoppelde apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
-            }
-          }
-        },
-        "defaultConfiguration": [
-          {
-            "id": 0,
-            "size": 1,
-            "value": 80
-          },
-          {
-            "id": 1,
-            "size": 1,
-            "value": "0xFF"
-          }
-        ],
-        "multiChannelNodes": {
-          "1": {
-            "class": "socket",
-            "capabilities": [
-              "onoff",
-              "measure_power",
-              "meter_power"
-            ],
-            "icon": "/drivers/powernode-6/assets/icon-1.svg",
-            "name": {
-              "en": "Greenwave PowerNode Socket 1",
-              "nl": "Greenwave PowerNode Stopcontact 1"
-            }
-          },
-          "2": {
-            "class": "socket",
-            "capabilities": [
-              "onoff",
-              "measure_power",
-              "meter_power"
-            ],
-            "icon": "/drivers/powernode-6/assets/icon-2.svg",
-            "name": {
-              "en": "Greenwave PowerNode Socket 2",
-              "nl": "Greenwave PowerNode Stopcontact 2"
-            }
-          },
-          "3": {
-            "class": "socket",
-            "capabilities": [
-              "onoff",
-              "measure_power",
-              "meter_power"
-            ],
-            "icon": "/drivers/powernode-6/assets/icon-3.svg",
-            "name": {
-              "en": "Greenwave PowerNode Socket 3",
-              "nl": "Greenwave PowerNode Stopcontact 3"
-            }
-          },
-          "4": {
-            "class": "socket",
-            "capabilities": [
-              "onoff",
-              "measure_power",
-              "meter_power"
-            ],
-            "icon": "/drivers/powernode-6/assets/icon-4.svg",
-            "name": {
-              "en": "Greenwave PowerNode Socket 4",
-              "nl": "Greenwave PowerNode Stopcontact 4"
-            }
-          },
-          "5": {
-            "class": "socket",
-            "capabilities": [
-              "onoff",
-              "measure_power",
-              "meter_power"
-            ],
-            "icon": "/drivers/powernode-6/assets/icon-5.svg",
-            "name": {
-              "en": "Greenwave PowerNode Socket 5",
-              "nl": "Greenwave PowerNode Stopcontact 5"
-            }
-          },
-          "6": {
-            "class": "socket",
-            "capabilities": [
-              "onoff",
-              "measure_power",
-              "meter_power"
-            ],
-            "icon": "/drivers/powernode-6/assets/icon-6.svg",
-            "name": {
-              "en": "Greenwave PowerNode Socket 6",
-              "nl": "Greenwave PowerNode Stopcontact 6"
-            }
-          }
-        }
-      },
-      "settings": [
-        {
-          "id": 0,
-          "type": "number",
-          "attr": {
-            "min": 1,
-            "max": 100
-          },
-          "value": 80,
-          "label": {
-            "en": "Power change for update",
-            "nl": "Wijziging in energie voor update"
-          },
-          "hint": {
-            "en": "Power change required to send an update to controller, in % from 1 to 100, default: 80 [%].",
-            "nl": "Wijziging in energie voordat er een update naar de controller wordt gestuurd, in % van 1 tot 100, standaard: 80 [%].."
-          }
-        },
-        {
-          "id": 1,
-          "type": "number",
-          "attr": {
-            "min": 1,
-            "max": 255
-          },
-          "value": 255,
-          "label": {
-            "en": "Keep alive time",
-            "nl": "Keep alive time"
-          },
-          "hint": {
-            "en": "The amount of minutes without contact between controller and device before the device starts blinking green, default: 255 [min].",
-            "nl": "Aantal minuten zonder contact tussen controller en apparaat voordat het apparaat groen gaat knipperen, standaard: 255 [min]."
-          }
-        },
-    		{
-    			"type": "group",
-    			"label": {
-    				"en": "Poll State socket 1",
-    				"nl": "Poll Status stopcontact 1"
-    			},
-    			"collapsed": true,
-    			"children": [
-    				{
-    					"id": "poll_onoff_1",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 300,
-    					"label": {
-    						"en": "On/off",
-    						"nl": "Aan/uit"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_measure_1",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 600,
-    					"label": {
-    						"en": "Wattage",
-    						"nl": "Wattage"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_meter_1",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 3600,
-    					"label": {
-    						"en": "KiloWattHour (kWh)",
-    						"nl": "KiloWattUur (kWh)"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-    					}
-    				}
-    			]
-    		},
-    		{
-    			"type": "group",
-    			"label": {
-    				"en": "Poll state socket 2",
-    				"nl": "Poll status stopcontact 2"
-    			},
-    			"collapsed": true,
-    			"children": [
-    				{
-    					"id": "poll_onoff_2",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 300,
-    					"label": {
-    						"en": "On/off",
-    						"nl": "Aan/uit"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_measure_2",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 600,
-    					"label": {
-    						"en": "Wattage",
-    						"nl": "Wattage"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_meter_2",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 3600,
-    					"label": {
-    						"en": "KiloWattHour (kWh)",
-    						"nl": "KiloWattUur (kWh)"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-    					}
-    				}
-    			]
-    		},
-    		{
-    			"type": "group",
-    			"label": {
-    				"en": "Poll state socket 3",
-    				"nl": "Poll status stopcontact 3"
-    			},
-    			"collapsed": true,
-    			"children": [
-    				{
-    					"id": "poll_onoff_3",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 300,
-    					"label": {
-    						"en": "On/off",
-    						"nl": "Aan/uit"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_measure_3",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 600,
-    					"label": {
-    						"en": "Wattage",
-    						"nl": "Wattage"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_meter_3",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 3600,
-    					"label": {
-    						"en": "KiloWattHour (kWh)",
-    						"nl": "KiloWattUur (kWh)"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-    					}
-    				}
-    			]
-    		},
-    		{
-    			"type": "group",
-    			"label": {
-    				"en": "Poll state socket 4",
-    				"nl": "Poll status stopcontact 4"
-    			},
-    			"collapsed": true,
-    			"children": [
-    				{
-    					"id": "poll_onoff_4",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 30,
-    					"label": {
-    						"en": "On/off",
-    						"nl": "Aan/uit"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_measure_4",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 600,
-    					"label": {
-    						"en": "Wattage",
-    						"nl": "Wattage"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_meter_4",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 3600,
-    					"label": {
-    						"en": "KiloWattHour (kWh)",
-    						"nl": "KiloWattUur (kWh)"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-    					}
-    				}
-    			]
-    		},
-    		{
-    			"type": "group",
-    			"label": {
-    				"en": "Poll state socket 5",
-    				"nl": "Poll status stopcontact 5"
-    			},
-    			"collapsed": true,
-    			"children": [
-    				{
-    					"id": "poll_onoff_5",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 300,
-    					"label": {
-    						"en": "On/off",
-    						"nl": "Aan/uit"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_measure_5",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 600,
-    					"label": {
-    						"en": "Wattage",
-    						"nl": "Wattage"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_meter_5",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 3600,
-    					"label": {
-    						"en": "KiloWattHour (kWh)",
-    						"nl": "KiloWattUur (kWh)"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-    					}
-    				}
-    			]
-    		},
-    		{
-    			"type": "group",
-    			"label": {
-    				"en": "Poll state socket 6",
-    				"nl": "Poll status stopcontact 6"
-    			},
-    			"collapsed": true,
-    			"children": [
-    				{
-    					"id": "poll_onoff_6",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 300,
-    					"label": {
-    						"en": "On/off",
-    						"nl": "Aan/uit"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_measure_6",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 600,
-    					"label": {
-    						"en": "Wattage",
-    						"nl": "Wattage"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
-    					}
-    				},
-    				{
-    					"id": "poll_meter_6",
-    					"type": "number",
-    					"attr": {
-    						"min": 0,
-    						"max": 7200
-    					},
-    					"value": 3600,
-    					"label": {
-    						"en": "KiloWattHour (kWh)",
-    						"nl": "KiloWattUur (kWh)"
-    					},
-    					"hint": {
-    						"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
-    						"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
-    					}
-    				}
-    			]
-    		}
-      ]
-    }
-  ]
+	"id": "com.greenwavesystems",
+	"name": {
+		"en": "Greenwave Systems",
+		"nl": "Greenwave Systems"
+	},
+	"version": "1.1.2",
+	"compatibility": ">=1.0.5",
+	"author": {
+		"name": "Athom B.V.",
+		"email": "info@athom.com"
+	},
+	"contributors": {
+		"developers": [
+			{
+				"name": "Rex Markesteijn",
+				"email": "rmarkesteijn79@gmail.com"
+			},
+			{
+				"name": "Jelger Haanstra",
+				"email": "homey@solidewebservices.com"
+			},
+			{
+				"name": "Ted Tolboom",
+				"email": "dTNL.Homey@gmail.com"
+			}
+		]
+	},
+	"flow": {
+		"actions": [
+			{
+				"id": "PN1_reset_meter",
+				"title": {
+					"en": "Reset meter values",
+					"nl": "Meter waarden resetten"
+				},
+				"hint": {
+					"en": "Reset the accumulated power usage (kWh). Can not be reversed.",
+					"nl": "Reset de stroomverbruik (kWh) waarden. Kan niet ongedaan worden gemaakt."
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"filter": "driver_id=powernode-1"
+					}
+				]
+			},
+			{
+				"id": "PN6_reset_meter",
+				"title": {
+					"en": "Reset meter values",
+					"nl": "Meter waarden resetten"
+				},
+				"hint": {
+					"en": "Reset the accumulated power usage (kWh). Can not be reversed.",
+					"nl": "Reset de stroomverbruik (kWh) waarden. Kan niet ongedaan worden gemaakt."
+				},
+				"args": [
+					{
+						"name": "device",
+						"type": "device",
+						"filter": "driver_id=powernode-6"
+					}
+				]
+			}
+		]
+	},
+	"category": [
+		"appliances"
+	],
+	"description": {
+		"en": "Drivers for Greenwave Systems devices",
+		"nl": "Drivers voor Greenwave Systems apparaten"
+	},
+	"images": {
+		"large": "/assets/images/large.jpg",
+		"small": "/assets/images/small.jpg"
+	},
+	"drivers": [
+		{
+			"id": "powernode-1",
+			"name": {
+				"en": "Greenwave PowerNode 1",
+				"nl": "Greenwave PowerNode 1"
+			},
+			"icon": "/drivers/powernode-1/assets/icon.svg",
+			"images": {
+				"large": "/drivers/powernode-1/assets/images/large.jpg",
+				"small": "/drivers/powernode-1/assets/images/small.jpg"
+			},
+			"class": "socket",
+			"capabilities": [
+				"onoff",
+				"measure_power",
+				"meter_power"
+			],
+			"zwave": {
+				"manufacturerId": 153,
+				"productTypeId": 2,
+				"productId": 2,
+				"learnmode": {
+					"image": "/drivers/powernode-1/assets/learnmode.svg",
+					"instruction": {
+						"en": "Press the small button on your Greenwave PowerNode",
+						"nl": "Druk op de kleine knop op de Greenwave PowerNode"
+					}
+				},
+				"associationGroups": [
+					1,
+					3
+				],
+				"associationGroupsOptions": {
+					"1": {
+						"hint": {
+							"en": "Reports the device status and allows control (ON/OFF) over the powernode (Homey ID by default). It is not recommended to change this group.",
+							"nl": "Rapportage van de status van de powernode en staat controle (AAN/UIT) over de powernode toe (Homey ID als standaard waarde). Het is niet aanbevolen om deze groep aan te passen."
+						}
+					},
+					"2": {
+						"hint": {
+							"en": "Reports alarm report when detecting current leakage of defined relay device if an association relationship has been defined (add Z-wave ID of relay device).",
+							"nl": "Rapportage van een alarm op het moment dat een lekstroom gedetecteerd wordt op een gekoppelds apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
+						}
+					},
+					"3": {
+						"hint": {
+							"en": "Reports the power value change if the difference of the instant power reading compared to previous report is larger than the -Power change for update- parameter set (e.g. 80%). (Homey ID by default)",
+							"nl": "Rapportage van de gebruikte energie wanneer het verschil met de vorige rapportage groter is dan de waarde ingesteld bij -Wijziging in energie voor update- parameter (bv. 80%). (Homey ID als standaard waarde)"
+						}
+					},
+					"4": {
+						"hint": {
+							"en": "Reports alarm when the powernode is in over-current protection and powers off a relay device if an association relationship has been defined (add Z-wave ID of relay device).",
+							"nl": "Alarm reportage wanneer de powernode in over-current protectie overschakeld en automatische uitschakeling van het gekoppelde apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
+						}
+					}
+				},
+				"defaultConfiguration": [
+					{
+						"id": 0,
+						"size": 1,
+						"value": 80
+					},
+					{
+						"id": 1,
+						"size": 1,
+						"value": "0xFF"
+					}
+				]
+			},
+			"settings": [
+				{
+					"id": 0,
+					"type": "number",
+					"attr": {
+						"min": 1,
+						"max": 100
+					},
+					"value": 80,
+					"label": {
+						"en": "Power change for update",
+						"nl": "Wijziging in energie voor update"
+					},
+					"hint": {
+						"en": "Power change required to send an update to controller, in % from 1 to 100, default: 80 [%].",
+						"nl": "Wijziging in energie voordat er een update naar de controller wordt gestuurd, in % van 1 tot 100, standaard: 80 [%].."
+					}
+				},
+				{
+					"id": 1,
+					"type": "number",
+					"attr": {
+						"min": 1,
+						"max": 255
+					},
+					"value": 255,
+					"label": {
+						"en": "Keep alive time",
+						"nl": "Keep alive time"
+					},
+					"hint": {
+						"en": "The amount of minutes without contact between controller and device before the device starts blinking green, default: 255 [min].",
+						"nl": "Aantal minuten zonder contact tussen controller en apparaat voordat het apparaat groen gaat knipperen, standaard: 255 [min]."
+					}
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll interval",
+						"nl": "Poll interal"
+					},
+					"children": [
+						{
+							"id": "poll_interval_onoff",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "Poll interval on/off",
+								"nl": "Poll interval on/off"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "poll_interval_measure",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Poll interval measure (W)",
+								"nl": "Poll interval measure (W)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "poll_interval_meter",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "Poll interval meter (kWh)",
+								"nl": "Poll interval meter (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"id": "powernode-6",
+			"name": {
+				"en": "Greenwave PowerNode 6",
+				"nl": "Greenwave PowerNode 6"
+			},
+			"icon": "/drivers/powernode-6/assets/icon.svg",
+			"images": {
+				"large": "/drivers/powernode-6/assets/images/large.jpg",
+				"small": "/drivers/powernode-6/assets/images/small.jpg"
+			},
+			"class": "socket",
+			"capabilities": [
+				"onoff",
+				"measure_power",
+				"meter_power"
+			],
+			"zwave": {
+				"manufacturerId": 153,
+				"productTypeId": 3,
+				"productId": 4,
+				"learnmode": {
+					"image": "/drivers/powernode-6/assets/learnmode.svg",
+					"instruction": {
+						"en": "Press the small button on your Greenwave PowerNode",
+						"nl": "Druk op de kleine knop op de Greenwave PowerNode"
+					}
+				},
+				"associationGroups": [
+					1,
+					3
+				],
+				"associationGroupsOptions": {
+					"1": {
+						"hint": {
+							"en": "Reports the device status and allows control (ON/OFF) over the powernode (Homey ID by default). It is not recommended to change this group.",
+							"nl": "Rapportage van de status van de powernode en staat controle (AAN/UIT) over de powernode toe (Homey ID als standaard waarde). Het is niet aanbevolen om deze groep aan te passen."
+						}
+					},
+					"2": {
+						"hint": {
+							"en": "Reports alarm report when detecting current leakage of defined relay device if an association relationship has been defined (add Z-wave ID of relay device).",
+							"nl": "Rapportage van een alarm op het moment dat een lekstroom gedetecteerd wordt op een gekoppelds apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
+						}
+					},
+					"3": {
+						"hint": {
+							"en": "Reports the power value change if the difference of the instant power reading compared to previous report is larger than the -Power change for update- parameter set (e.g. 80%). (Homey ID by default)",
+							"nl": "Rapportage van de gebruikte energie wanneer het verschil met de vorige rapportage groter is dan de waarde ingesteld bij -Wijziging in energie voor update- parameter (bv. 80%). (Homey ID als standaard waarde)"
+						}
+					},
+					"4": {
+						"hint": {
+							"en": "Reports alarm when the powernode is in over-current protection and powers off a relay device if an association relationship has been defined (add Z-wave ID of relay device).",
+							"nl": "Alarm reportage wanneer de powernode in over-current protectie overschakeld en automatische uitschakeling van het gekoppelde apparaat indien een relatie gedefineerd is (voeg het Z-wave ID van het te koppelen apparaat toe)."
+						}
+					}
+				},
+				"defaultConfiguration": [
+					{
+						"id": 0,
+						"size": 1,
+						"value": 80
+					},
+					{
+						"id": 1,
+						"size": 1,
+						"value": "0xFF"
+					}
+				],
+				"multiChannelNodes": {
+					"1": {
+						"class": "socket",
+						"capabilities": [
+							"onoff",
+							"measure_power",
+							"meter_power"
+						],
+						"icon": "/drivers/powernode-6/assets/icon-1.svg",
+						"name": {
+							"en": "Greenwave PowerNode Socket 1",
+							"nl": "Greenwave PowerNode Stopcontact 1"
+						}
+					},
+					"2": {
+						"class": "socket",
+						"capabilities": [
+							"onoff",
+							"measure_power",
+							"meter_power"
+						],
+						"icon": "/drivers/powernode-6/assets/icon-2.svg",
+						"name": {
+							"en": "Greenwave PowerNode Socket 2",
+							"nl": "Greenwave PowerNode Stopcontact 2"
+						}
+					},
+					"3": {
+						"class": "socket",
+						"capabilities": [
+							"onoff",
+							"measure_power",
+							"meter_power"
+						],
+						"icon": "/drivers/powernode-6/assets/icon-3.svg",
+						"name": {
+							"en": "Greenwave PowerNode Socket 3",
+							"nl": "Greenwave PowerNode Stopcontact 3"
+						}
+					},
+					"4": {
+						"class": "socket",
+						"capabilities": [
+							"onoff",
+							"measure_power",
+							"meter_power"
+						],
+						"icon": "/drivers/powernode-6/assets/icon-4.svg",
+						"name": {
+							"en": "Greenwave PowerNode Socket 4",
+							"nl": "Greenwave PowerNode Stopcontact 4"
+						}
+					},
+					"5": {
+						"class": "socket",
+						"capabilities": [
+							"onoff",
+							"measure_power",
+							"meter_power"
+						],
+						"icon": "/drivers/powernode-6/assets/icon-5.svg",
+						"name": {
+							"en": "Greenwave PowerNode Socket 5",
+							"nl": "Greenwave PowerNode Stopcontact 5"
+						}
+					},
+					"6": {
+						"class": "socket",
+						"capabilities": [
+							"onoff",
+							"measure_power",
+							"meter_power"
+						],
+						"icon": "/drivers/powernode-6/assets/icon-6.svg",
+						"name": {
+							"en": "Greenwave PowerNode Socket 6",
+							"nl": "Greenwave PowerNode Stopcontact 6"
+						}
+					}
+				}
+			},
+			"settings": [
+				{
+					"id": 0,
+					"type": "number",
+					"attr": {
+						"min": 1,
+						"max": 100
+					},
+					"value": 80,
+					"label": {
+						"en": "Power change for update",
+						"nl": "Wijziging in energie voor update"
+					},
+					"hint": {
+						"en": "Power change required to send an update to controller, in % from 1 to 100, default: 80 [%].",
+						"nl": "Wijziging in energie voordat er een update naar de controller wordt gestuurd, in % van 1 tot 100, standaard: 80 [%].."
+					}
+				},
+				{
+					"id": 1,
+					"type": "number",
+					"attr": {
+						"min": 1,
+						"max": 255
+					},
+					"value": 255,
+					"label": {
+						"en": "Keep alive time",
+						"nl": "Keep alive time"
+					},
+					"hint": {
+						"en": "The amount of minutes without contact between controller and device before the device starts blinking green, default: 255 [min].",
+						"nl": "Aantal minuten zonder contact tussen controller en apparaat voordat het apparaat groen gaat knipperen, standaard: 255 [min]."
+					}
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll interval main socket",
+						"nl": "Poll interal stekkerdoos"
+					},
+					"children": [
+						{
+							"id": "poll_interval_onoff",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "On/off",
+								"nl": "Aan/uit"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "poll_interval_measure",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Power (W)",
+								"nl": "Vermogen (W)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "poll_interval_meter",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "Energy consumption (kWh)",
+								"nl": "Energieverbruik (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll State socket 1",
+						"nl": "Poll Status stopcontact 1"
+					},
+					"collapsed": true,
+					"children": [
+						{
+							"id": "endpoint_interval_onoff_1",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "On/off",
+								"nl": "Aan/uit"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_measure_1",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Wattage",
+								"nl": "Wattage"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_meter_1",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "KiloWattHour (kWh)",
+								"nl": "KiloWattUur (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll state socket 2",
+						"nl": "Poll status stopcontact 2"
+					},
+					"collapsed": true,
+					"children": [
+						{
+							"id": "endpoint_interval_onoff_2",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "On/off",
+								"nl": "Aan/uit"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_measure_2",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Wattage",
+								"nl": "Wattage"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_meter_2",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "KiloWattHour (kWh)",
+								"nl": "KiloWattUur (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll state socket 3",
+						"nl": "Poll status stopcontact 3"
+					},
+					"collapsed": true,
+					"children": [
+						{
+							"id": "endpoint_interval_onoff_3",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "On/off",
+								"nl": "Aan/uit"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_measure_3",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Wattage",
+								"nl": "Wattage"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_meter_3",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "KiloWattHour (kWh)",
+								"nl": "KiloWattUur (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll state socket 4",
+						"nl": "Poll status stopcontact 4"
+					},
+					"collapsed": true,
+					"children": [
+						{
+							"id": "endpoint_interval_onoff_4",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "On/off",
+								"nl": "Aan/uit"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_measure_4",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Wattage",
+								"nl": "Wattage"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_meter_4",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "KiloWattHour (kWh)",
+								"nl": "KiloWattUur (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll state socket 5",
+						"nl": "Poll status stopcontact 5"
+					},
+					"collapsed": true,
+					"children": [
+						{
+							"id": "endpoint_interval_onoff_5",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "On/off",
+								"nl": "Aan/uit"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_measure_5",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Wattage",
+								"nl": "Wattage"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_meter_5",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "KiloWattHour (kWh)",
+								"nl": "KiloWattUur (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				},
+				{
+					"type": "group",
+					"label": {
+						"en": "Poll state socket 6",
+						"nl": "Poll status stopcontact 6"
+					},
+					"collapsed": true,
+					"children": [
+						{
+							"id": "endpoint_interval_onoff_6",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 0,
+							"label": {
+								"en": "On/off",
+								"nl": "Aan/uit"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 300 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 300 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_measure_6",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 600,
+							"label": {
+								"en": "Wattage",
+								"nl": "Wattage"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 600 seconden."
+							}
+						},
+						{
+							"id": "endpoint_interval_meter_6",
+							"type": "number",
+							"attr": {
+								"min": 0,
+								"max": 7200
+							},
+							"value": 3600,
+							"label": {
+								"en": "KiloWattHour (kWh)",
+								"nl": "KiloWattUur (kWh)"
+							},
+							"hint": {
+								"en": "The amount of seconds between asking the device for a status update, 0 will disable polling.\nRange: 0 - 7200.\nDefault: 3600 seconds.",
+								"nl": "Aantal seconden tussen het opvragen van een status update aan het apparaat, 0 zal polling uitschakelen.\nBereik: 0 - 7200.\nStandaard waarde: 3600 seconden."
+							}
+						}
+					]
+				}
+			]
+		}
+	]
 }
