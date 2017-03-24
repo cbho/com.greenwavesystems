@@ -18,6 +18,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'SWITCH_BINARY_REPORT',
 			command_report_parser: report => report.Value === 'on/enable',
+			pollInterval: 'poll_interval_onoff',
 		},
 
 		measure_power: {
@@ -31,13 +32,13 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'METER_REPORT',
 			command_report_parser: report => {
-				if (report.hasOwnProperty('Properties2') &&
-					report.Properties2.hasOwnProperty('Scale') &&
+				if (typeof report.Properties2.Scale !== 'undefined' &&
 					report.Properties2.Scale === 2) {
 					return report['Meter Value (Parsed)'];
 				}
 				return null;
 			},
+			pollInterval: 'poll_interval_meter',
 		},
 
 		meter_power: {
@@ -51,13 +52,13 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'METER_REPORT',
 			command_report_parser: report => {
-				if (report.hasOwnProperty('Properties2') &&
-					report.Properties2.hasOwnProperty('Scale') &&
+				if (typeof report.Properties2.Scale !== 'undefined' &&
 					report.Properties2.Scale === 0) {
 					return report['Meter Value (Parsed)'];
 				}
 				return null;
 			},
+			pollInterval: 'poll_interval_measure',
 		},
 	},
 
