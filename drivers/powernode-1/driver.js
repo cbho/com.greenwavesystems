@@ -10,7 +10,6 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 		onoff: {
 			command_class: 'COMMAND_CLASS_SWITCH_BINARY',
 			command_get: 'SWITCH_BINARY_GET',
-			command_get_cb: false,
 			command_set: 'SWITCH_BINARY_SET',
 			command_set_parser: value => ({
 				'Switch Value': value,
@@ -30,7 +29,8 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'METER_REPORT',
 			command_report_parser: report => {
-				if (report.hasOwnProperty('Properties2') &&
+				if (report &&
+					report.hasOwnProperty('Properties2') &&
 					report.Properties2.hasOwnProperty('Scale') &&
 					report.Properties2.Scale === 2) {
 					return report['Meter Value (Parsed)'];
@@ -52,7 +52,8 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'METER_REPORT',
 			command_report_parser: report => {
-				if (report.hasOwnProperty('Properties2') &&
+				if (report &&
+					report.hasOwnProperty('Properties2') &&
 					report.Properties2.hasOwnProperty('Scale') &&
 					report.Properties2.Scale === 0) {
 					return report['Meter Value (Parsed)'];

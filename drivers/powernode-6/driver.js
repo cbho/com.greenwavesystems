@@ -11,7 +11,6 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 		onoff: {
 			command_class: 'COMMAND_CLASS_SWITCH_BINARY',
 			command_get: 'SWITCH_BINARY_GET',
-			command_get_cb: false,
 			command_set: 'SWITCH_BINARY_SET',
 			command_set_parser: value => ({
 				'Switch Value': value,
@@ -32,7 +31,9 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'METER_REPORT',
 			command_report_parser: report => {
-				if (typeof report.Properties2.Scale !== 'undefined' &&
+				if (report &&
+					report.hasOwnProperty('Properties2') &&
+					report.Properties2.hasOwnProperty('Scale') &&
 					report.Properties2.Scale === 2) {
 					return report['Meter Value (Parsed)'];
 				}
@@ -52,7 +53,9 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 			}),
 			command_report: 'METER_REPORT',
 			command_report_parser: report => {
-				if (typeof report.Properties2.Scale !== 'undefined' &&
+				if (report &&
+					report.hasOwnProperty('Properties2') &&
+					report.Properties2.hasOwnProperty('Scale') &&
 					report.Properties2.Scale === 0) {
 					return report['Meter Value (Parsed)'];
 				}
@@ -70,7 +73,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 
 				if (settings.zw_node_id.indexOf('.') < 0 && !endpointInterval.hasOwnProperty(token)) {
 					endpointInterval[token] = {};
-					for(var i = 1; i <= 6; i++) {
+					for (var i = 1; i <= 6; i++) {
 						endpointInterval[token][i] = [];
 						if (settings['endpoint_interval_onoff_' + i]) setEndpointInterval('onoff', i, settings['endpoint_interval_onoff_' + i], token);
 						if (settings['endpoint_interval_measure_' + i]) setEndpointInterval('measure', i, settings['endpoint_interval_measure_' + i], token);
@@ -127,7 +130,7 @@ Homey.manager('flow').on('action.PN6_reset_meter', (callback, args) => {
 	} else return callback('unknown_error');
 });
 
-function setEndpointInterval (capability, multiChannel, value, token) {
+function setEndpointInterval(capability, multiChannel, value, token) {
 	const node = module.exports.nodes[token];
 
 	if (endpointInterval[token][multiChannel][capability]) {
@@ -138,39 +141,45 @@ function setEndpointInterval (capability, multiChannel, value, token) {
 	if (value === 0) return;
 
 	switch (capability) {
-		case 'onoff': {
-			if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY !== "undefined") {
-				endpointInterval[token][multiChannel].onoff = setInterval(() => {
-					module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
-					node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY.SWITCH_BINARY_GET({});
-				}, value * 1000);
+		case 'onoff':
+			{
+				if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY !== "undefined") {
+					endpointInterval[token][multiChannel].onoff = setInterval(() => {
+						module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
+						node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY.SWITCH_BINARY_GET({});
+					}, value * 1000);
+				}
 			}
-		} break;
+			break;
 
-		case 'measure': {
-			if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
-				endpointInterval[token][multiChannel].measure = setInterval(() => {
-					module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
-					node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
-						Properties1: {
-							Scale: 2,
-						},
-					});
-				}, value * 1000);
+		case 'measure':
+			{
+				if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
+					endpointInterval[token][multiChannel].measure = setInterval(() => {
+						module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
+						node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
+							Properties1: {
+								Scale: 2,
+							},
+						});
+					}, value * 1000);
+				}
 			}
-		} break;
+			break;
 
-		case 'meter': {
-			if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
-				endpointInterval[token][multiChannel].meter = setInterval(() => {
-					module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
-					node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
-						Properties1: {
-							Scale: 0,
-						},
-					});
-				}, value * 1000);
+		case 'meter':
+			{
+				if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
+					endpointInterval[token][multiChannel].meter = setInterval(() => {
+						module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
+						node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
+							Properties1: {
+								Scale: 0,
+							},
+						});
+					}, value * 1000);
+				}
 			}
-		} break;
+			break;
 	}
 }
