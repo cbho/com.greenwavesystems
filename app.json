@@ -188,7 +188,7 @@
 					"type": "group",
 					"label": {
 						"en": "Poll interval",
-						"nl": "Poll interal"
+						"nl": "Poll interval"
 					},
 					"children": [
 						{
