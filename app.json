@@ -408,8 +408,8 @@
             "nl": "Wijziging in energie voor update"
           },
           "hint": {
-            "en": "Power change required to send an update to controller, in % from 1 to 100, default: 80 [%].",
-            "nl": "Wijziging in energie voordat er een update naar de controller wordt gestuurd, in % van 1 tot 100, standaard: 80 [%].."
+            "en": "Power change required to send an update to controller, from 1% to 100%, default: 80 [%].",
+            "nl": "Wijziging in energie voordat er een update naar de controller wordt gestuurd, van 1% tot 100%, standaard: 80 [%]."
           }
         },
         {
@@ -433,7 +433,7 @@
           "type": "group",
           "label": {
             "en": "Poll interval main socket",
-            "nl": "Poll interal stekkerdoos"
+            "nl": "Poll interval stekkerdoos"
           },
           "children": [
             {
@@ -492,8 +492,8 @@
         {
           "type": "group",
           "label": {
-            "en": "Poll State socket 1",
-            "nl": "Poll Status stopcontact 1"
+            "en": "Poll State Socket 1",
+            "nl": "Poll Status Stopcontact 1"
           },
           "collapsed": true,
           "children": [
@@ -553,8 +553,8 @@
         {
           "type": "group",
           "label": {
-            "en": "Poll state socket 2",
-            "nl": "Poll status stopcontact 2"
+            "en": "Poll State Socket 2",
+            "nl": "Poll Status Stopcontact 2"
           },
           "collapsed": true,
           "children": [
@@ -614,8 +614,8 @@
         {
           "type": "group",
           "label": {
-            "en": "Poll state socket 3",
-            "nl": "Poll status stopcontact 3"
+            "en": "Poll State Socket 3",
+            "nl": "Poll Status Stopcontact 3"
           },
           "collapsed": true,
           "children": [
@@ -675,8 +675,8 @@
         {
           "type": "group",
           "label": {
-            "en": "Poll state socket 4",
-            "nl": "Poll status stopcontact 4"
+            "en": "Poll State Socket 4",
+            "nl": "Poll Status Stopcontact 4"
           },
           "collapsed": true,
           "children": [
@@ -736,8 +736,8 @@
         {
           "type": "group",
           "label": {
-            "en": "Poll state socket 5",
-            "nl": "Poll status stopcontact 5"
+            "en": "Poll State Socket 5",
+            "nl": "Poll Status Stopcontact 5"
           },
           "collapsed": true,
           "children": [
