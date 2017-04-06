@@ -102,7 +102,7 @@ module.exports = new ZwaveDriver(path.basename(__dirname), {
 		endpoint_interval_meter_1: (newValue, oldValue, deviceData) => setEndpointInterval('meter', 1, newValue, deviceData.token),
 		endpoint_interval_onoff_2: (newValue, oldValue, deviceData) => setEndpointInterval('onoff', 2, newValue, deviceData.token),
 		endpoint_interval_measure_2: (newValue, oldValue, deviceData) => setEndpointInterval('measure', 2, newValue, deviceData.token),
-		endpoint_interval_meter_2: (newValue, oldValue, deviceData) => setEndpointInterval('meter', 1, newValue, deviceData.token),
+		endpoint_interval_meter_2: (newValue, oldValue, deviceData) => setEndpointInterval('meter', 2, newValue, deviceData.token),
 		endpoint_interval_onoff_3: (newValue, oldValue, deviceData) => setEndpointInterval('onoff', 3, newValue, deviceData.token),
 		endpoint_interval_measure_3: (newValue, oldValue, deviceData) => setEndpointInterval('measure', 3, newValue, deviceData.token),
 		endpoint_interval_meter_3: (newValue, oldValue, deviceData) => setEndpointInterval('meter', 3, newValue, deviceData.token),
@@ -135,7 +135,7 @@ function setEndpointInterval(capability, multiChannel, value, token) {
 
 	if (endpointInterval[token][multiChannel][capability]) {
 		clearInterval(endpointInterval[token][multiChannel][capability]);
-		endpointInterval[token][multiChannel][capability] = null
+		endpointInterval[token][multiChannel][capability] = null;
 	}
 
 	if (value === 0) return;
