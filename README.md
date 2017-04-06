@@ -11,8 +11,10 @@ This app adds support for devices made by [Greenwave Systems](http://www.greenwa
 * Dutch
 
 ## Changelog:
+### v1.1.2 - (save settings (once) to activate all polling intervals)
+Powernode 6 - add polling intervals for each separate socket and its capabilities
 
-### v1.1.0 - (re-pair of devices is needed)
+### v1.1.0 & v1.1.1 - (re-pair of devices is needed)
 **update:**
 
 All devices - add ability to differentiate polling interval for all capabilities    
