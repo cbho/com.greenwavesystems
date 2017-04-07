@@ -141,45 +141,42 @@ function setEndpointInterval(capability, multiChannel, value, token) {
 	if (value === 0) return;
 
 	switch (capability) {
-		case 'onoff':
-			{
-				if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY !== "undefined") {
-					endpointInterval[token][multiChannel].onoff = setInterval(() => {
-						module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
-						node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY.SWITCH_BINARY_GET({});
-					}, value * 1000);
-				}
+		case 'onoff': {
+			if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY !== "undefined") {
+				endpointInterval[token][multiChannel].onoff = setInterval(() => {
+					module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
+					node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_SWITCH_BINARY.SWITCH_BINARY_GET({});
+				}, value * 1000);
 			}
+		}
 			break;
 
-		case 'measure':
-			{
-				if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
-					endpointInterval[token][multiChannel].measure = setInterval(() => {
-						module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
-						node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
-							Properties1: {
-								Scale: 2,
-							},
-						});
-					}, value * 1000);
-				}
+		case 'measure': {
+			if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
+				endpointInterval[token][multiChannel].measure = setInterval(() => {
+					module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
+					node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
+						Properties1: {
+							Scale: 2,
+						},
+					});
+				}, value * 1000);
 			}
+		}
 			break;
 
-		case 'meter':
-			{
-				if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
-					endpointInterval[token][multiChannel].meter = setInterval(() => {
-						module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
-						node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
-							Properties1: {
-								Scale: 0,
-							},
-						});
-					}, value * 1000);
-				}
+		case 'meter': {
+			if (typeof node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER !== "undefined") {
+				endpointInterval[token][multiChannel].meter = setInterval(() => {
+					module.exports._debug('polling: MultiChannelNode[' + multiChannel + '].' + capability);
+					node.instance.MultiChannelNodes[multiChannel].CommandClass.COMMAND_CLASS_METER.METER_GET({
+						Properties1: {
+							Scale: 0,
+						},
+					});
+				}, value * 1000);
 			}
+		}
 			break;
 	}
 }
