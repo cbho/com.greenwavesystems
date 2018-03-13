@@ -27,15 +27,10 @@ class PowerNode1Device extends ZwaveMeteringDevice {
 			}
 		});
 
-		this.registerSetting('power_change_treshold', value => {
-			return new Buffer(value);
-		});
+		this.registerSetting('power_change_treshold');
 
-		this.registerSetting('keep_alive', value => {
-			return new Buffer(value);
-		});
+		this.registerSetting('keep_alive');
 	}
-	
 }
 
 module.exports = PowerNode1Device;
