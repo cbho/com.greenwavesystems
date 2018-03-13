@@ -1,11 +1,18 @@
 'use strict';
 
 const Homey = require('homey');
-const ZwaveDevice = require('homey-meshdriver').ZwaveDevice;
+const ZwaveMeteringDevice = require('homey-meshdriver').ZwaveMeteringDevice;
 
-class PowerNode5Device extends ZwaveDevice {
+class PowerNode6Device extends ZwaveMeteringDevice {
 	
 	async onMeshInit() {
+
+		/*
+		====================================================
+		Generic init for entire strip
+		====================================================
+		*/
+		
 		this.registerCapability('onoff', 'SWITCH_BINARY', {
 			getOpts: {
 				getOnStart: true,
@@ -26,15 +33,47 @@ class PowerNode5Device extends ZwaveDevice {
 				pollInterval: 'poll_interval_meter'
 			}
 		});
-	}
 
-	asyncResetMeter() {
-		this.CommandClass.COMMAND_CLASS_METER.METER_RESET({}, (err, result) => {
-			if (err) return callback(err);
-			if (result === 'TRANSMIT_COMPLETE_OK') return Promise.resolve(true);
-			return Promise.reject('unknown_response');
+		this.registerSetting('power_change_treshold', value => {
+			return new Buffer(value);
 		});
+
+		this.registerSetting('keep_alive', value => {
+			return new Buffer(value);
+		});
+
+		/*
+		====================================================
+		Init per socket for entire strip
+		====================================================
+		*/
+
+		for (let i = 1; i < 7; i++) {
+			this.registerCapability('onoff', 'SWITCH_BINARY', {
+				getOpts: {
+					getOnStart: true,
+					pollInterval: `endpoint_interval_onoff_${i}`,
+				},
+				multiChannelNodeId: i
+			});
+			
+			this.registerCapability('measure_power', 'METER', {
+				getOpts: {
+					getOnStart: false,
+					pollInterval: `endpoint_interval_measure_${i}`,
+				},
+				multiChannelNodeId: i
+			});
+
+			this.registerCapability('meter_power', 'METER', {
+				getOpts: {
+					getOnStart: false,
+					pollInterval: `endpoint_interval_meter_${i}`
+				},
+				multiChannelNodeId: i
+			});
+		}
 	}
 }
 
-module.exports = PowerNode5Device;
+module.exports = PowerNode6Device;

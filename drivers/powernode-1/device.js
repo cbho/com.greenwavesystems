@@ -1,9 +1,9 @@
 'use strict';
 
 const Homey = require('homey');
-const ZwaveDevice = require('homey-meshdriver').ZwaveDevice;
+const ZwaveMeteringDevice = require('homey-meshdriver').ZwaveMeteringDevice;
 
-class PowerNode1Device extends ZwaveDevice {
+class PowerNode1Device extends ZwaveMeteringDevice {
 	
 	async onMeshInit() {
 		this.registerCapability('onoff', 'SWITCH_BINARY', {
@@ -26,15 +26,16 @@ class PowerNode1Device extends ZwaveDevice {
 				pollInterval: 'poll_interval_meter'
 			}
 		});
-	}
 
-	asyncResetMeter() {
-		this.CommandClass.COMMAND_CLASS_METER.METER_RESET({}, (err, result) => {
-			if (err) return callback(err);
-			if (result === 'TRANSMIT_COMPLETE_OK') return Promise.resolve(true);
-			return Promise.reject('unknown_response');
+		this.registerSetting('power_change_treshold', value => {
+			return new Buffer(value);
+		});
+
+		this.registerSetting('keep_alive', value => {
+			return new Buffer(value);
 		});
 	}
+	
 }
 
 module.exports = PowerNode1Device;

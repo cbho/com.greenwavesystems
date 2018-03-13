@@ -34,14 +34,14 @@
 	"flow": {
 		"actions": [
 			{
-				"id": "PN1_reset_meter",
+				"id": "resetMeter",
 				"title": {
 					"en": "Reset meter values",
-					"nl": "Meter waarden resetten"
+					"nl": "Meter waarden opnieuw instellen"
 				},
 				"hint": {
-					"en": "Reset the accumulated power usage (kWh). Can not be reversed.",
-					"nl": "Reset de stroomverbruik (kWh) waarden. Kan niet ongedaan worden gemaakt."
+					"en": "Reset the accumulated power usage value (kWh), note that this can not be reversed.",
+					"nl": "Stel geaccumuleerde stroomverbruik waarde (kWh) opnieuw in, dit kan niet worden teruggedraaid."
 				},
 				"args": [
 					{
@@ -52,14 +52,14 @@
 				]
 			},
 			{
-				"id": "PN5_reset_meter",
+				"id": "resetMeter",
 				"title": {
 					"en": "Reset meter values",
-					"nl": "Meter waarden resetten"
+					"nl": "Meter waarden opnieuw instellen"
 				},
 				"hint": {
-					"en": "Reset the accumulated power usage (kWh). Can not be reversed.",
-					"nl": "Reset de stroomverbruik (kWh) waarden. Kan niet ongedaan worden gemaakt."
+					"en": "Reset the accumulated power usage value (kWh), note that this can not be reversed.",
+					"nl": "Stel geaccumuleerde stroomverbruik waarde (kWh) opnieuw in, dit kan niet worden teruggedraaid."
 				},
 				"args": [
 					{
@@ -70,14 +70,14 @@
 				]
 			},
 			{
-				"id": "PN6_reset_meter",
+				"id": "resetMeter",
 				"title": {
 					"en": "Reset meter values",
-					"nl": "Meter waarden resetten"
+					"nl": "Meter waarden opnieuw instellen"
 				},
 				"hint": {
-					"en": "Reset the accumulated power usage (kWh). Can not be reversed.",
-					"nl": "Reset de stroomverbruik (kWh) waarden. Kan niet ongedaan worden gemaakt."
+					"en": "Reset the accumulated power usage value (kWh), note that this can not be reversed.",
+					"nl": "Stel geaccumuleerde stroomverbruik waarde (kWh) opnieuw in, dit kan niet worden teruggedraaid."
 				},
 				"args": [
 					{
@@ -174,7 +174,7 @@
 			},
 			"settings": [
 				{
-					"id": "0",
+					"id": "power_change_treshold",
 					"type": "number",
 					"attr": {
 						"min": 1,
@@ -191,7 +191,7 @@
 					}
 				},
 				{
-					"id": "1",
+					"id": "keep_alive",
 					"type": "number",
 					"attr": {
 						"min": 1,
@@ -409,7 +409,7 @@
 			},
 			"settings": [
 				{
-					"id": "0",
+					"id": "power_change_treshold",
 					"type": "number",
 					"attr": {
 						"min": 1,
@@ -426,7 +426,7 @@
 					}
 				},
 				{
-					"id": "1",
+					"id": "keep_alive",
 					"type": "number",
 					"attr": {
 						"min": 1,

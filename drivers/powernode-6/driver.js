@@ -2,17 +2,12 @@
 
 const Homey = require('homey');
 
-class PowerNode5Driver extends Homey.Driver {
+class PowerNode6Driver extends Homey.Driver {
 	
 	onInit() {
-		this.log('PowerNode1Driver has been inited');
-
-		this._resetMeter = new Homey.FlowCardAction('PN1_reset_meter');
-		this._resetMeter.register().registerRunListener( (args, state) => {
-			return args.device.resetMeter();
-		});
+		this.log('PowerNode6Driver has been inited');
 	}
 	
 }
 
-module.exports = PowerNode5Driver;
+module.exports = PowerNode6Driver;
